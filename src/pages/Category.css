@@ -1,0 +1,87 @@
+/* ============ Category Page ============ */
+.categoryPage {
+    padding: 32px 24px;
+}
+
+.categoryTitle {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 28px;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+/* ============ Category Tabs ============ */
+.categoryTabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--border-subtle);
+}
+
+.categoryTabs::-webkit-scrollbar {
+    height: 4px;
+}
+
+.categoryTabs::-webkit-scrollbar-track {
+    background: var(--border-subtle);
+    border-radius: 2px;
+}
+
+.categoryTabs::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.categoryTab {
+    padding: 10px 22px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: var(--font-body);
+}
+
+.categoryTab:hover {
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+    background: rgba(129, 140, 248, 0.07);
+}
+
+.categoryTab.active {
+    background: var(--primary-color);
+    color: #0D0D0D;
+    border-color: transparent;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(129, 140, 248, 0.3);
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 768px) {
+    .categoryPage {
+        padding: 24px 16px;
+    }
+
+    .categoryTitle {
+        font-size: 1.8rem;
+    }
+
+    .categoryTabs {
+        gap: 6px;
+    }
+
+    .categoryTab {
+        padding: 8px 16px;
+        font-size: 0.82rem;
+    }
+}

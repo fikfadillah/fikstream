@@ -1,0 +1,289 @@
+/* ============ Navbar — Solid Theme ============ */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+    height: var(--header-height);
+    background: var(--bg-color);
+    /* Solid Black */
+    /* Remove backdrop blur for solid look */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background-color var(--transition-speed);
+}
+
+/* ============ Logo ============ */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo-text {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    /* Combined with white */
+    letter-spacing: -0.5px;
+    text-transform: lowercase;
+}
+
+/* Gradient text only for branding accent if needed, mostly white now */
+.logo-text span {
+    color: var(--primary-color);
+}
+
+/* Alternatively, keep gradient text if requested, but "solid theme" implies less gradients.
+   Let's keep the logo text slightly special but cleaner. 
+   Actually, let's make it White text with colored dot or just White.
+   The user asked for "Solid Palette" but didn't explicitly kill the logo gradient.
+   I'll make it solid white to matches the "Clean/Premium" look, 
+   maybe header is just white text "fikstream".
+*/
+.logo-text {
+    background: none;
+    -webkit-text-fill-color: initial;
+    color: white;
+}
+
+/* ============ Nav Links ============ */
+.navLinks {
+    display: flex;
+    gap: 8px;
+}
+
+.navLink {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    /* Slightly smaller for uppercase */
+    font-weight: 600;
+    transition: all var(--transition-speed);
+    padding: 8px 14px;
+    border-radius: var(--border-radius);
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+}
+
+.navLink:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.navLink.active {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.08);
+    /* Subtle highlight */
+    font-weight: 600;
+}
+
+.navLink.active::after {
+    /* Remove underline style for cleaner look, or just use simpler border */
+    display: none;
+}
+
+/* ============ Right Section ============ */
+.rightSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    padding: 4px;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed);
+}
+
+.searchContainer.active {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+}
+
+.searchInput {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    padding: 6px 8px;
+    width: 0;
+    opacity: 0;
+    transition: all var(--transition-speed);
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+}
+
+.searchInput.open {
+    width: 220px;
+    opacity: 1;
+}
+
+.iconButton {
+    background: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.iconButton:hover {
+    color: var(--primary-color);
+    background: rgba(129, 140, 248, 0.1);
+}
+
+/* ============ Search Dropdown ============ */
+.searchDropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 340px;
+    background: var(--surface-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    z-index: 1001;
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+.searchItem {
+    display: flex;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    align-items: center;
+    transition: background var(--transition-fast);
+    text-decoration: none;
+}
+
+.searchItem:hover {
+    background: rgba(129, 140, 248, 0.06);
+}
+
+.searchItem:last-of-type {
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.searchItemPoster {
+    width: 42px;
+    height: 62px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.searchItemInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.searchItemTitle {
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.searchItemMeta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.searchViewAll {
+    padding: 12px 16px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: background var(--transition-fast);
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+
+.searchViewAll:hover {
+    background: rgba(129, 140, 248, 0.06);
+}
+
+/* ============ Mobile Menu ============ */
+.mobileMenuBtn {
+    display: none;
+}
+
+/* Intermediate: Tighten spacing for smaller laptops */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .navbar {
+        padding: 0 2%;
+    }
+
+    .logo-text {
+        font-size: 1.4rem;
+    }
+
+    .navLinks {
+        gap: 2px;
+    }
+
+    .navLink {
+        padding: 8px 8px;
+        /* High compaction */
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        /* Slightly less wide */
+    }
+}
+
+@media (max-width: 1024px) {
+    .navLinks {
+        display: none;
+        position: absolute;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        background: var(--bg-color);
+        flex-direction: column;
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--border-subtle);
+        gap: 4px;
+    }
+
+    .navLinks.open {
+        display: flex;
+    }
+
+    .navLink {
+        padding: 14px 16px;
+        font-size: 1rem;
+        border-radius: var(--border-radius);
+    }
+
+    .mobileMenuBtn {
+        display: flex;
+    }
+
+    .searchInput.open {
+        width: 150px;
+    }
+
+    .searchDropdown {
+        width: 280px;
+        right: -40px;
+    }
+}

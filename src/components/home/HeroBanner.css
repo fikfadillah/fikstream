@@ -1,0 +1,331 @@
+/* ============ Hero Banner ============ */
+.heroContainer {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    /* Increased height for cinematic feel */
+    min-height: 600px;
+    max-height: 900px;
+    overflow: hidden;
+    margin-bottom: 0;
+    background-color: var(--bg-color);
+}
+
+.heroSlide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center top;
+    transition: opacity 0.8s ease-in-out;
+    /* Faster, sharper transition */
+    opacity: 0;
+    z-index: 1;
+}
+
+.heroSlide.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+/* Gradient Overlay - Desktop */
+/* Left-to-right fade for text readability */
+.heroOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right,
+            var(--bg-color) 0%,
+            rgba(0, 0, 0, 0.85) 35%,
+            rgba(0, 0, 0, 0.4) 60%,
+            transparent 100%);
+    display: flex;
+    align-items: center;
+}
+
+/* Bottom fade to blend with next section */
+.heroOverlay::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(to top, var(--bg-color) 10%, transparent 100%);
+    pointer-events: none;
+}
+
+.heroContent {
+    width: 45%;
+    padding-left: 4%;
+    color: var(--text-primary);
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding-top: 60px;
+}
+
+.heroTitle {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.1;
+    color: var(--text-primary);
+    /* Removed text gradient for solid clean look */
+}
+
+.heroMeta {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    align-items: center;
+}
+
+.heroRating {
+    color: #fbbf24;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.heroYear,
+.heroType {
+    opacity: 0.8;
+}
+
+/* ============ Genre Pills ============ */
+.heroGenres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.genrePill {
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    /* Neutral glass */
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+}
+
+.genrePill:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #000000;
+    transform: translateY(-1px);
+}
+
+/* ============ Synopsis ============ */
+.heroSynopsis {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    max-width: 600px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.heroActions {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.heroActions .btn-primary {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    border: none;
+    backdrop-filter: none;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    /* Stronger glow */
+    border-radius: 5px;
+    /* Requested 5px */
+    padding: 14px 48px !important;
+    /* Larger & Wider */
+    font-size: 1.1rem;
+    /* Slightly bigger text */
+    font-weight: 800;
+    text-transform: uppercase;
+    /* Often looks better on big buttons */
+    letter-spacing: 0.05em;
+}
+
+.heroActions .btn-primary:hover {
+    background: var(--primary-color);
+    color: #000000;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+/* ============ Nav Buttons ============ */
+.navButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-speed);
+}
+
+.navButton:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #000000;
+}
+
+.navPrev {
+    left: 24px;
+}
+
+.navNext {
+    right: 24px;
+}
+
+/* ============ Indicators ============ */
+.slideIndicators {
+    position: absolute;
+    bottom: 30px;
+    right: 4%;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: var(--primary-color);
+    transform: scale(1.2);
+    box-shadow: 0 0 8px rgba(129, 140, 248, 0.5);
+}
+
+/* ============ Responsive Mobile ============ */
+@media (max-width: 1024px) {
+    .heroContent {
+        width: 60%;
+    }
+
+    .heroTitle {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .heroContainer {
+        height: 90vh;
+        /* Taller on mobile to fit vertical stack */
+        min-height: auto;
+    }
+
+    .heroSlide {
+        background-size: 100% auto;
+        /* Full width image at top */
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-color: var(--bg-color);
+        /* Rest is black */
+    }
+
+    /* 
+       Mobile Gradient:
+       The image is roughly near the top. We want the gradient to start
+       fading to black just below the image area and be solid black for text
+    */
+    .heroOverlay {
+        background: linear-gradient(to bottom,
+                transparent 20%,
+                /* Top 20% clear for image face */
+                var(--bg-color) 55%,
+                /* Solid black starts around middle */
+                var(--bg-color) 100%);
+        align-items: flex-end;
+        /* Push content to bottom */
+    }
+
+    .heroOverlay::after {
+        display: none;
+    }
+
+    .heroContent {
+        width: 100%;
+        padding: 0 20px 40px;
+        justify-content: flex-end;
+        /* Content at bottom */
+        padding-top: 0;
+        text-align: left;
+        /* Keep left align or center? User ref had text left */
+    }
+
+    .heroTitle {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .heroMeta {
+        font-size: 0.9rem;
+        margin-bottom: 14px;
+    }
+
+    .heroGenres {
+        margin-bottom: 16px;
+    }
+
+    .heroSynopsis {
+        font-size: 0.9rem;
+        margin-bottom: 24px;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        color: var(--text-secondary);
+    }
+
+    .navButton {
+        display: none;
+    }
+
+    .slideIndicators {
+        right: 50%;
+        transform: translateX(50%);
+        bottom: 15px;
+    }
+}

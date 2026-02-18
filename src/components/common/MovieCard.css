@@ -1,0 +1,139 @@
+/* ============ Movie Card ============ */
+.movieCard {
+    position: relative;
+    background-color: var(--surface-color);
+    /* Deep Blue */
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    cursor: pointer;
+    aspect-ratio: 2 / 3;
+    border: 1px solid transparent;
+}
+
+.movieCard:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-glow);
+    /* Outer Glow */
+    border-color: var(--primary-color);
+    z-index: 10;
+}
+
+.posterWrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.posterImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity var(--transition-speed);
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top,
+            #000000 0%,
+            rgba(0, 0, 0, 0.75) 55%,
+            transparent 100%);
+    padding: 16px;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+/* ── Rating Badge (top-right) ── */
+.ratingBadge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    /* Glass effect like Hero */
+    color: #FBBF24;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    backdrop-filter: blur(4px);
+}
+
+/* ── Status Badge (top-left): NEW / ONGOING ── */
+.statusBadge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 5;
+}
+
+.statusBadge.new {
+    background: var(--primary-color);
+    color: #000000;
+}
+
+.statusBadge.ongoing {
+    background: var(--primary-color);
+    color: #000000;
+}
+
+/* Pulse dot for ONGOING */
+.pulseDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #000000;
+    animation: pulse 1.6s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(0.7);
+    }
+}
+
+/* ── Text ── */
+.movieTitle {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: var(--font-heading);
+}
+
+.movieInfo {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}

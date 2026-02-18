@@ -1,0 +1,117 @@
+/* ============ Disclaimer Page ============ */
+.disclaimerContainer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px;
+}
+
+.disclaimerHeader {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+    border-bottom: 2px solid;
+    border-image: var(--gradient-primary) 1;
+}
+
+.disclaimerHeader svg {
+    margin-bottom: 16px;
+    color: var(--primary-color) !important;
+}
+
+.disclaimerHeader h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.disclaimerContent {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius-xl);
+    padding: 40px;
+    line-height: 1.8;
+    border: 1px solid var(--border-subtle);
+}
+
+.disclaimerContent section {
+    margin-bottom: 32px;
+}
+
+.disclaimerContent section:last-child {
+    margin-bottom: 0;
+}
+
+.disclaimerContent h2 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary-light);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.disclaimerContent p {
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+}
+
+.disclaimerContent ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.disclaimerContent ul li {
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    padding-left: 24px;
+    position: relative;
+}
+
+.disclaimerContent ul li:before {
+    content: "•";
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+    position: absolute;
+    left: 0;
+}
+
+.disclaimerContent strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.disclaimerFooter {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border-subtle);
+    text-align: center;
+}
+
+.disclaimerFooter p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    margin: 0;
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 768px) {
+    .disclaimerContainer {
+        padding: 24px 16px;
+    }
+
+    .disclaimerHeader h1 {
+        font-size: 2rem;
+    }
+
+    .disclaimerContent {
+        padding: 24px 20px;
+        border-radius: var(--border-radius-lg);
+    }
+
+    .disclaimerContent h2 {
+        font-size: 1.2rem;
+    }
+}
