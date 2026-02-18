@@ -22,8 +22,28 @@ const ALLOWED_ACTIONS = [
     'detail',
 ];
 
+const ALLOWED_DOMAINS = [
+    'fikstream.netlify.app',
+    'localhost',
+    '127.0.0.1'
+];
+
 export const handler = async (event) => {
-    // Hanya izinkan GET request
+    // 1. Cek Origin/Referer untuk keamanan ekstra
+    const origin = event.headers.origin || event.headers.referer;
+    // Jika tidak ada origin/referer (misal direct curl/browser access), atau domain tidak diizinkan -> Block
+    const isAllowed = origin && ALLOWED_DOMAINS.some(domain => origin.includes(domain));
+
+    if (!isAllowed) {
+        // Uncomment baris bawah jika ingin strict mode (saat ini warning dulu agar tidak break dev)
+        // console.warn(`Blocked access from unauthorized origin: ${origin}`);
+        return {
+            statusCode: 403,
+            body: JSON.stringify({ error: 'Access Denied: Unauthorized Origin' }),
+        };
+    }
+
+    // 2. Hanya izinkan GET request
     if (event.httpMethod !== 'GET') {
         return {
             statusCode: 405,
