@@ -1,0 +1,76 @@
+---
+
+---
+
+<div id="redoc-container"></div>
+<script
+  src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"
+  is:inline></script>
+<script is:inline>
+  function initRedoc() {
+    if (typeof Redoc === "undefined") {
+      setTimeout(initRedoc, 100);
+      return;
+    }
+    Redoc.init(
+      "/openapi.yaml",
+      {
+        // FIK STREAM API Documentation
+        scrollYOffset: 0,
+        theme: {
+          colors: {
+            primary: {
+              main: "#4f46e5",
+            },
+            http: {
+              get: "#0891b2",
+              post: "#4f46e5",
+              put: "#d97706",
+              delete: "#ef4444",
+              patch: "#7c3aed",
+              head: "#64748b",
+              options: "#64748b",
+            },
+          },
+          typography: {
+            fontFamily: "Inter, system-ui, -apple-system, sans-serif",
+            fontSize: "14px",
+            lineHeight: "1.6",
+            headings: {
+              fontFamily: "Inter, system-ui, -apple-system, sans-serif",
+              fontWeight: "700",
+            },
+            code: {
+              fontFamily: "Consolas, Monaco, 'Andale Mono', monospace",
+              fontSize: "13px",
+            },
+          },
+          sidebar: {
+            backgroundColor: "#f8fafc",
+            textColor: "#1e293b",
+            activeTextColor: "#4f46e5",
+            width: "260px",
+          },
+          rightPanel: {
+            backgroundColor: "#1e293b",
+            textColor: "#f8fafc",
+            width: "40%",
+          },
+          codeBlock: {
+            backgroundColor: "#0f172a",
+          },
+        },
+      },
+      document.getElementById("redoc-container"),
+    );
+  }
+
+  initRedoc();
+</script>
+
+<style>
+  #redoc-container {
+    width: 100%;
+    min-height: 100vh;
+  }
+</style>

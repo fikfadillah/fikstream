@@ -1,0 +1,163 @@
+openapi: 3.0.0
+info:
+  title: FIK STREAM API
+  description: |
+    Dokumentasi API resmi untuk FIK STREAM — platform streaming yang menyediakan akses ke ribuan film, serial TV, dan anime dengan kualitas tinggi.
+    Gunakan API ini untuk membangun aplikasi streaming Anda sendiri.
+
+    ## Autentikasi
+    API ini bersifat publik dan tidak memerlukan API key pada parameter URL.
+    Harap patuhi ketentuan penggunaan yang berlaku.
+
+  version: 4.0.0
+servers:
+  - url: https://foodcash.com.br/sistema/apiv4
+    description: Production Server
+
+tags:
+  - name: Content
+    description: Endpoints for fetching lists of content (movies, series, anime)
+  - name: Search
+    description: Content search functionality
+  - name: Details
+    description: Detailed information for specific content items
+
+paths:
+  /api.php:
+    get:
+      summary: Universal Content Endpoint
+      description: Main endpoint for fetching various types of content based on the `action` parameter.
+      parameters:
+        - in: query
+          name: action
+          required: true
+          schema:
+            type: string
+            enum:
+              - trending
+              - indonesian-movies
+              - indonesian-drama
+              - kdrama
+              - short-tv
+              - anime
+              - adult-comedy
+              - western-tv
+              - indo-dub
+              - search
+              - detail
+          description: |
+            The action to perform. Determines the type of content returned.
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination (applicable for list actions).
+        - in: query
+          name: q
+          schema:
+            type: string
+          description: Search query (required when action=search).
+        - in: query
+          name: detailPath
+          schema:
+            type: string
+          description: Unique path identifier for content detail (required when action=detail).
+
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ContentListResponse'
+                  - $ref: '#/components/schemas/DetailResponse'
+
+components:
+  schemas:
+    ContentItem:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "12345"
+        title:
+          type: string
+          example: "The Batman"
+        poster:
+          type: string
+          format: uri
+          example: "https://image.tmdb.org/t/p/w500/..."
+        rating:
+          type: number
+          format: float
+          example: 7.8
+        year:
+          type: string
+          example: "2022"
+        type:
+          type: string
+          enum: [movie, tv]
+          example: "movie"
+        genre:
+          type: string
+          example: "Action, Crime, Drama"
+        detailPath:
+          type: string
+          description: Use this path with the `detail` action to fetch full info.
+          example: "the-batman-iDt3xkFFK1"
+
+    ContentListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentItem'
+        page:
+          type: integer
+          example: 1
+        hasMore:
+          type: boolean
+          example: true
+
+    DetailResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+            title:
+              type: string
+            description:
+              type: string
+            poster:
+              type: string
+            rating:
+              type: number
+            genres:
+              type: array
+              items:
+                type: string
+            episodes: 
+              type: array
+              description: Available for TV Entires
+              items:
+                 type: object
+                 properties: 
+                    episode: 
+                        type: string
+                    url:
+                        type: string
+            playerUrl:
+              type: string
+              description: URL to the video player or stream source.
