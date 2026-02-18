@@ -1,5 +1,5 @@
 /**
- * API Service — FikStream
+ * API Service — FikStream ✍️
  *
  * Semua request diarahkan ke Netlify Function (/api/proxy)
  * yang bertindak sebagai proxy ke API eksternal.

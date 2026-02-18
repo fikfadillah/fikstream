@@ -31,7 +31,7 @@ const Footer = () => {
                     justifyContent: 'center',
                     gap: '4px'
                 }}>
-                    &copy; {new Date().getFullYear()} FikStream. All rights reserved.
+                    &copy; {new Date().getFullYear()} fikfadillah ✍️. All rights reserved.
                 </p>
             </div>
         </footer>
