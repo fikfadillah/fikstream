@@ -20,6 +20,7 @@ const ALLOWED_ACTIONS = [
     'indo-dub',
     'search',
     'detail',
+    'stream',
 ];
 
 const ALLOWED_DOMAINS = [
@@ -75,7 +76,16 @@ export const handler = async (event) => {
 
     try {
         // Bangun URL ke API eksternal dengan semua query params yang diterima
-        const targetUrl = new URL(apiBaseUrl);
+        let targetUrl;
+        if (action === 'stream') {
+            // Asumsi: stream.php ada di root yang sama dengan API_BASE_URL, atau parent directory
+            // Jika API_BASE_URL = 'https://api.megawe.net/index.php', maka stream.php = 'https://api.megawe.net/stream.php'
+            // Kita pakai URL constructor dengan base dari API_BASE_URL
+            targetUrl = new URL('stream.php', apiBaseUrl);
+        } else {
+            targetUrl = new URL(apiBaseUrl);
+        }
+
         Object.entries(params).forEach(([key, value]) => {
             targetUrl.searchParams.append(key, value);
         });

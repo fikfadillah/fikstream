@@ -42,4 +42,5 @@ export const api = {
   getCDrama: (page = 1) => fetchFromApi({ action: 'search', q: 'chinese', page }),
   search: (keyword, page = 1) => fetchFromApi({ action: 'search', q: keyword, page }),
   getDetail: (detailPath) => fetchFromApi({ action: 'detail', detailPath }),
+  getStreamUrl: (id) => `${BASE_URL}?action=stream&id=${id}`,
 };

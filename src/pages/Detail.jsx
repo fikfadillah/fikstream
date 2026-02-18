@@ -8,6 +8,17 @@ import { Star, Calendar, Film, Globe, Play } from 'lucide-react';
 import { api } from '../services/api';
 import './Detail.css';
 
+/**
+ * Helper: Ambil ID dari URL stream asli dan ubah jadi URL proxy.
+ * format asli: .../stream.php?id=XXXX
+ * format proxy: /api/proxy?action=stream&id=XXXX
+ */
+const convertStreamUrl = (url) => {
+    if (!url) return null;
+    const match = url.match(/[?&]id=([^&]+)/);
+    return match ? api.getStreamUrl(match[1]) : url;
+};
+
 /** Ambil daftar episode dari data season/episode API */
 const getEpisodes = (detail, activeSeason) => {
     if (detail.seasons?.length > 0) {
@@ -45,7 +56,7 @@ const Detail = () => {
                 const movieData = res.data || res.items?.[0] || res;
                 setDetail(movieData);
                 setActiveSeason(movieData.seasons?.[0]?.season ?? 1);
-                setCurrentVideoUrl(movieData.playerUrl || movieData.iframe || null);
+                setCurrentVideoUrl(convertStreamUrl(movieData.playerUrl || movieData.iframe || null));
             } finally {
                 setLoading(false);
             }
@@ -107,8 +118,8 @@ const Detail = () => {
                             {episodes.map((ep, idx) => (
                                 <button
                                     key={idx}
-                                    onClick={() => setCurrentVideoUrl(ep.playerUrl)}
-                                    className={`episodeCard ${currentVideoUrl === ep.playerUrl ? 'active' : ''}`}
+                                    onClick={() => setCurrentVideoUrl(convertStreamUrl(ep.playerUrl))}
+                                    className={`episodeCard ${currentVideoUrl === convertStreamUrl(ep.playerUrl) ? 'active' : ''}`}
                                 >
                                     <div className="episodeCardPlay">
                                         <Play size={16} fill="currentColor" />
