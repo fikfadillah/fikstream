@@ -107,16 +107,31 @@ export const handler = async (event) => {
             };
         }
 
-        const data = await response.json();
+        const contentType = response.headers.get('content-type') || '';
 
-        return {
-            statusCode: 200,
-            headers: {
-                'Content-Type': 'application/json',
-                'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
-            },
-            body: JSON.stringify(data),
-        };
+        if (contentType.includes('application/json')) {
+            const data = await response.json();
+            return {
+                statusCode: 200,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*', // CORS for good measure
+                    'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+                },
+                body: JSON.stringify(data),
+            };
+        } else {
+            // Asumsi ini HTML atau text biasa (untuk stream.php)
+            const text = await response.text();
+            return {
+                statusCode: 200,
+                headers: {
+                    'Content-Type': contentType,
+                    'Access-Control-Allow-Origin': '*',
+                },
+                body: text,
+            };
+        }
     } catch (error) {
         console.error('Proxy internal error:', error);
         return {
