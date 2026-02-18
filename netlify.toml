@@ -3,7 +3,14 @@
   publish = "dist"
   functions = "netlify/functions"
 
-# Route /api/* ke Netlify Functions
+# Route /api/proxy secara eksplisit ke Netlify Function
+[[redirects]]
+  from = "/api/proxy"
+  to = "/.netlify/functions/proxy"
+  status = 200
+  force = true
+
+# Fallback untuk route API lainnya (opsional, jika ada function lain)
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
