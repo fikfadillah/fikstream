@@ -20,7 +20,7 @@ const Disclaimer = () => {
                     <section>
                         <h2>Tentang Konten</h2>
                         <p>
-                            Website <strong>FikStream ✍️</strong> adalah platform streaming yang menampilkan konten film dan serial TV
+                            Website <strong>FikStream </strong> adalah platform streaming yang menampilkan konten film dan serial TV
                             dari berbagai sumber melalui API pihak ketiga. Kami <strong>TIDAK menyimpan</strong>,
                             <strong>TIDAK mengupload</strong>, dan <strong>TIDAK meng-host</strong> file video apapun di server kami.
                         </p>
@@ -48,7 +48,7 @@ const Disclaimer = () => {
                     <section>
                         <h2>Batasan Tanggung Jawab</h2>
                         <p>
-                            FikStream ✍️ <strong>TIDAK bertanggung jawab</strong> atas:
+                            FikStream <strong>TIDAK bertanggung jawab</strong> atas:
                         </p>
                         <ul>
                             <li>Keakuratan, kelengkapan, atau ketersediaan konten yang ditampilkan</li>
