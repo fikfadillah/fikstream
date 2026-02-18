@@ -1,0 +1,100 @@
+/* ============ Genre Page ============ */
+.genrePage {
+    padding-top: 100px;
+    padding-bottom: 60px;
+    min-height: 80vh;
+}
+
+/* ── Header ── */
+.genreHeader {
+    margin-bottom: 32px;
+}
+
+.genreBackBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: color 0.2s ease;
+}
+
+.genreBackBtn:hover {
+    color: var(--primary-color);
+}
+
+.genreTitleRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.genreIcon {
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.genreTitle {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    text-transform: capitalize;
+}
+
+.genreSubtitle {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    margin: 0;
+}
+
+.genreSubtitle strong {
+    color: var(--primary-color);
+}
+
+/* ── Empty State ── */
+.genreEmpty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-height: 40vh;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+/* ── Loading More ── */
+.genreLoadingMore {
+    display: flex;
+    justify-content: center;
+    padding: 32px 0;
+}
+
+.genreLoadingMore .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── End Message ── */
+.genreEndMsg {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    padding: 24px 0;
+    opacity: 0.6;
+}

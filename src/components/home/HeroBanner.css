@@ -153,32 +153,56 @@
     display: flex;
     gap: 16px;
     margin-top: 8px;
+    flex-wrap: wrap;
 }
 
+.heroWatchBtn,
 .heroActions .btn-primary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     background: #FFFFFF !important;
     color: #000000 !important;
     border: none;
     backdrop-filter: none;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-    /* Stronger glow */
     border-radius: 5px;
-    /* Requested 5px */
-    padding: 14px 48px !important;
-    /* Larger & Wider */
-    font-size: 1.1rem;
-    /* Slightly bigger text */
+    padding: 14px 32px !important;
+    font-size: 1rem;
     font-weight: 800;
     text-transform: uppercase;
-    /* Often looks better on big buttons */
     letter-spacing: 0.05em;
+    transition: all 0.25s ease;
+    text-decoration: none;
 }
 
+.heroWatchBtn:hover,
 .heroActions .btn-primary:hover {
-    background: var(--primary-color);
-    color: #000000;
-    border-color: var(--primary-color);
+    background: var(--primary-color) !important;
+    color: #000000 !important;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.heroInfoBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(8px);
+    border-radius: 5px;
+    padding: 14px 28px !important;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.heroInfoBtn:hover {
+    background: rgba(255, 255, 255, 0.22) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
     transform: translateY(-2px);
 }
 
@@ -237,7 +261,7 @@
 .indicator.active {
     background: var(--primary-color);
     transform: scale(1.2);
-    box-shadow: 0 0 8px rgba(129, 140, 248, 0.5);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
 /* ============ Responsive Mobile ============ */

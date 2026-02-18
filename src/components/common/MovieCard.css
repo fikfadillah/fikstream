@@ -29,7 +29,45 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: opacity var(--transition-speed);
+    transition: opacity var(--transition-speed), transform 0.3s ease;
+}
+
+/* ── Play Button Overlay ── */
+.playOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 4;
+}
+
+.playButton {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transform: scale(0.85);
+    transition: transform 0.25s ease;
+}
+
+.movieCard:hover .playOverlay {
+    opacity: 1;
+}
+
+.movieCard:hover .playButton {
+    transform: scale(1);
+}
+
+.movieCard:hover .posterImage {
+    transform: scale(1.04);
 }
 
 .overlay {
@@ -54,17 +92,17 @@
     position: absolute;
     top: 8px;
     right: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    /* Glass effect like Hero */
+    background: rgba(0, 0, 0, 0.72);
     color: #FBBF24;
     padding: 4px 8px;
     border-radius: 4px;
     font-weight: 700;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     display: flex;
     align-items: center;
     gap: 4px;
     backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* ── Status Badge (top-left): NEW / ONGOING ── */

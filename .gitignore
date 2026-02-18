@@ -12,6 +12,14 @@ dist
 dist-ssr
 *.local
 
+# Environment variables (berisi API keys — jangan di-commit!)
+.env
+.env.local
+.env.*.local
+
+# Temp files
+temp_response*.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,20 +1,31 @@
-const BASE_URL = 'https://foodcash.com.br/sistema/apiv4/api.php';
+/**
+ * API Service — FikStream
+ *
+ * Semua request diarahkan ke Netlify Function (/api/proxy)
+ * yang bertindak sebagai proxy ke API eksternal.
+ * URL API asli TIDAK pernah terekspos ke browser.
+ */
 
+const BASE_URL = '/api/proxy';
+
+/**
+ * Fungsi dasar untuk fetch ke proxy endpoint.
+ * @param {Record<string, string|number>} params - Query parameters
+ * @returns {Promise<any>} Response JSON dari API
+ */
 const fetchFromApi = async (params) => {
-  try {
-    const url = new URL(BASE_URL);
-    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+  const url = new URL(BASE_URL, window.location.origin);
+  Object.entries(params).forEach(([key, value]) => {
+    url.searchParams.append(key, String(value));
+  });
 
-    const response = await fetch(url.toString());
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Fetch error:', error);
-    throw error;
+  const response = await fetch(url.toString());
+
+  if (!response.ok) {
+    throw new Error(`API Error: ${response.status}`);
   }
+
+  return response.json();
 };
 
 export const api = {
@@ -27,7 +38,8 @@ export const api = {
   getAdultComedy: (page = 1) => fetchFromApi({ action: 'adult-comedy', page }),
   getWesternTV: (page = 1) => fetchFromApi({ action: 'western-tv', page }),
   getIndoDub: (page = 1) => fetchFromApi({ action: 'indo-dub', page }),
-  getCDrama: (page = 1) => fetchFromApi({ action: 'search', q: 'chinese', page }), // Fallback for C-Drama
-  search: (keyword) => fetchFromApi({ action: 'search', q: keyword }),
+  /** C-Drama menggunakan search fallback karena tidak ada endpoint khusus */
+  getCDrama: (page = 1) => fetchFromApi({ action: 'search', q: 'chinese', page }),
+  search: (keyword, page = 1) => fetchFromApi({ action: 'search', q: keyword, page }),
   getDetail: (detailPath) => fetchFromApi({ action: 'detail', detailPath }),
 };

@@ -2,10 +2,10 @@
     /* ── Cinema Dark Mode Palette ── */
     --bg-color: #000000;
     /* Obsidian Black */
-    --surface-color: #030328;
-    /* Black Rock / Deep Blue */
-    --surface-hover: #0a0a3d;
-    /* Slightly lighter blue for hover */
+    --surface-color: #111111;
+    /* Dark Surface */
+    --surface-hover: #1c1c1c;
+    /* Slightly lighter for hover */
 
     /* ── Accents ── */
     --primary-color: #FFFFFF;
@@ -29,8 +29,8 @@
     --gradient-hero: linear-gradient(90deg, #000000 30%, transparent 100%);
 
     /* ── Border & Shadows ── */
-    --border-color: #1a1a3d;
-    --border-subtle: #0f0f29;
+    --border-color: #2a2a2a;
+    --border-subtle: #1a1a1a;
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.7);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star } from 'lucide-react';
+import { Star, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import './MovieCard.css';
 
@@ -12,6 +12,13 @@ const MovieCard = ({ movie }) => {
     <Link to={`/detail/${movie.detailPath || ''}`} className="movieCard">
       <div className="posterWrapper">
         <img src={movie.poster} alt={movie.title} className="posterImage" loading="lazy" />
+
+        {/* Play Button Overlay — center */}
+        <div className="playOverlay">
+          <div className="playButton">
+            <Play size={22} fill="currentColor" />
+          </div>
+        </div>
 
         {/* Status Badge — top-left */}
         {statusLabel && (

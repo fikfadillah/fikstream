@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /detail/
+Disallow: /api/
+Disallow: /.netlify/
+Allow: /
+
+Sitemap: https://fikstream.netlify.app/sitemap.xml

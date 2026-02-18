@@ -5,6 +5,7 @@ import Detail from './pages/Detail';
 import Disclaimer from './pages/Disclaimer';
 import Categories from './pages/Categories';
 import Category from './pages/Category';
+import Genre from './pages/Genre';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/category/:category?" element={<Category />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
         <Route path="/categories" element={<Categories />} />
+        <Route path="/genre/:genreName" element={<Genre />} />
       </Routes>
     </Router>
   );

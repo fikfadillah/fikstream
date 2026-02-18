@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Play, Star, Calendar, Film } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Star, Calendar, Film, Info } from 'lucide-react';
 import './HeroBanner.css';
 
 const HeroBanner = ({ items = [] }) => {
@@ -62,9 +62,13 @@ const HeroBanner = ({ items = [] }) => {
                             </p>
 
                             <div className="heroActions">
-                                <Link to={`/detail/${item.detailPath}`} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <Link to={`/detail/${item.detailPath}`} className="btn btn-primary heroWatchBtn">
                                     <Play size={20} fill="currentColor" />
-                                    Watch Now
+                                    Tonton Sekarang
+                                </Link>
+                                <Link to={`/detail/${item.detailPath}`} className="btn btn-secondary heroInfoBtn">
+                                    <Info size={20} />
+                                    Info Lengkap
                                 </Link>
                             </div>
                         </div>

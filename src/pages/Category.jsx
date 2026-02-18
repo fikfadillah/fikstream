@@ -1,99 +1,76 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import MovieCard from '../components/common/MovieCard';
 import { SectionSkeleton, SkeletonCard } from '../components/common/Skeleton';
-import { api } from '../services/api';
+import { CATEGORIES, getCategoryById } from '../constants/categories';
+import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
 import './Category.css';
 
 const Category = () => {
     const { category: urlCategory } = useParams();
     const navigate = useNavigate();
     const [activeCategory, setActiveCategory] = useState(urlCategory || 'trending');
-    const [categoryData, setCategoryData] = useState({ data: [], loading: false, hasMore: true, page: 1 });
+    const [items, setItems] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
-    const observer = useRef();
 
-    const categories = [
-        { id: 'trending', name: 'Trending', api: api.getTrending },
-        { id: 'indonesian-movies', name: 'Film Indonesia', api: api.getIndonesianMovies },
-        { id: 'indonesian-drama', name: 'Drama Indonesia', api: api.getIndonesianDrama },
-        { id: 'kdrama', name: 'K-Drama', api: api.getKDrama },
-        { id: 'c-drama', name: 'C-Drama', api: api.getCDrama },
-        { id: 'short-tv', name: 'Short TV', api: api.getShortTV },
-        { id: 'anime', name: 'Anime', api: api.getAnime },
-        { id: 'adult-comedy', name: 'Komedi Dewasa', api: api.getAdultComedy },
-        { id: 'western-tv', name: 'Western TV', api: api.getWesternTV },
-        { id: 'indo-dub', name: 'Indo Dub', api: api.getIndoDub }
-    ];
+    const { lastElementRef, page, resetPage } = useInfiniteScroll(hasMore, loadingMore);
 
-    // Infinite Scroll Observer Callback
-    const lastMovieElementRef = useCallback(node => {
-        if (loadingMore || !categoryData.hasMore) return;
-        if (observer.current) observer.current.disconnect();
-        observer.current = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) {
-                setCategoryData(prev => ({ ...prev, page: prev.page + 1 }));
-            }
-        });
-        if (node) observer.current.observe(node);
-    }, [loadingMore, categoryData.hasMore]);
-
-    // Update active category when URL changes
+    // Sync URL → state
     useEffect(() => {
         if (urlCategory && urlCategory !== activeCategory) {
             setActiveCategory(urlCategory);
         }
     }, [urlCategory]);
 
-    // Initial Category Fetch
+    // Initial fetch saat kategori berubah
     useEffect(() => {
-        const fetchCategory = async () => {
-            setCategoryData({ data: [], loading: true, hasMore: true, page: 1 });
+        const currentCat = getCategoryById(activeCategory);
+        if (!currentCat) return;
+
+        const fetchInitial = async () => {
+            setItems([]);
+            setLoading(true);
+            setHasMore(true);
+            resetPage();
             try {
-                const currentCat = categories.find(c => c.id === activeCategory);
-                if (currentCat && currentCat.api) {
-                    const res = await currentCat.api(1);
-                    setCategoryData({
-                        data: res?.items || [],
-                        loading: false,
-                        hasMore: res?.hasMore !== false,
-                        page: 1
-                    });
-                }
-            } catch (e) {
-                console.error("Failed to fetch category", e);
-                setCategoryData(prev => ({ ...prev, loading: false }));
+                const res = await currentCat.api(1);
+                setItems(res?.items || []);
+                setHasMore(res?.hasMore !== false);
+            } catch {
+                // Gagal fetch — biarkan items kosong
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchCategory();
+        fetchInitial();
     }, [activeCategory]);
 
-    // Load More Effect
+    // Load more saat page bertambah
     useEffect(() => {
-        if (categoryData.page > 1) {
-            const loadMore = async () => {
-                setLoadingMore(true);
-                try {
-                    const currentCat = categories.find(c => c.id === activeCategory);
-                    if (currentCat && currentCat.api) {
-                        const res = await currentCat.api(categoryData.page);
-                        setCategoryData(prev => ({
-                            ...prev,
-                            data: [...prev.data, ...(res.items || [])],
-                            hasMore: res?.hasMore !== false,
-                        }));
-                    }
-                } catch (e) {
-                    console.error("Failed to load more", e);
-                } finally {
-                    setLoadingMore(false);
-                }
-            };
-            loadMore();
-        }
-    }, [categoryData.page, activeCategory]);
+        if (page <= 1) return;
+        const currentCat = getCategoryById(activeCategory);
+        if (!currentCat) return;
+
+        const loadMore = async () => {
+            setLoadingMore(true);
+            try {
+                const res = await currentCat.api(page);
+                setItems((prev) => [...prev, ...(res?.items || [])]);
+                setHasMore(res?.hasMore !== false);
+            } catch {
+                // Gagal load more — hentikan infinite scroll
+                setHasMore(false);
+            } finally {
+                setLoadingMore(false);
+            }
+        };
+
+        loadMore();
+    }, [page]);
 
     const handleCategoryChange = (categoryId) => {
         setActiveCategory(categoryId);
@@ -101,7 +78,7 @@ const Category = () => {
         window.scrollTo(0, 0);
     };
 
-    const currentCategoryName = categories.find(c => c.id === activeCategory)?.name || activeCategory;
+    const currentCategoryName = getCategoryById(activeCategory)?.name || activeCategory;
 
     return (
         <Layout>
@@ -109,7 +86,7 @@ const Category = () => {
                 <h1 className="categoryTitle">{currentCategoryName}</h1>
 
                 <div className="categoryTabs">
-                    {categories.map(cat => (
+                    {CATEGORIES.map((cat) => (
                         <button
                             key={cat.id}
                             className={`categoryTab ${activeCategory === cat.id ? 'active' : ''}`}
@@ -120,20 +97,19 @@ const Category = () => {
                     ))}
                 </div>
 
-                {categoryData.loading && categoryData.page === 1 ? (
+                {loading ? (
                     <SectionSkeleton />
                 ) : (
                     <div className="grid">
-                        {categoryData.data.map((item, index) => {
-                            if (categoryData.data.length === index + 1) {
-                                return (
-                                    <div ref={lastMovieElementRef} key={`${item.id}-${index}`}>
-                                        <MovieCard movie={item} />
-                                    </div>
-                                );
-                            } else {
-                                return <MovieCard key={`${item.id}-${index}`} movie={item} />;
-                            }
+                        {items.map((item, index) => {
+                            const isLast = items.length === index + 1;
+                            return isLast ? (
+                                <div ref={lastElementRef} key={`${item.id}-${index}`}>
+                                    <MovieCard movie={item} />
+                                </div>
+                            ) : (
+                                <MovieCard key={`${item.id}-${index}`} movie={item} />
+                            );
                         })}
                     </div>
                 )}
@@ -144,16 +120,12 @@ const Category = () => {
                     </div>
                 )}
 
-                {!categoryData.hasMore && !categoryData.loading && categoryData.data.length > 0 && (
-                    <p style={{ textAlign: 'center', margin: '20px', color: 'var(--text-secondary)' }}>
-                        You've reached the end.
-                    </p>
+                {!hasMore && !loading && items.length > 0 && (
+                    <p className="endMessage">You've reached the end.</p>
                 )}
 
-                {!categoryData.loading && categoryData.data.length === 0 && (
-                    <p style={{ textAlign: 'center', margin: '40px', color: 'var(--text-secondary)' }}>
-                        No content available.
-                    </p>
+                {!loading && items.length === 0 && (
+                    <p className="endMessage">No content available.</p>
                 )}
             </div>
         </Layout>

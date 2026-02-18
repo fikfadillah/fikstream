@@ -1,225 +1,306 @@
 /* ============ Detail Page ============ */
-.detailContainer {
-    padding-bottom: 50px;
+
+/* ── Loading ── */
+.detailLoading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
 }
 
-.detailHeader {
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── Backdrop Blur Header ── */
+.detailBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 420px;
+    background-size: cover;
+    background-position: center top;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.detailBackdropOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.55) 0%,
+            var(--bg-color) 100%);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+/* ── Main Container ── */
+.detailContainer {
     position: relative;
+    z-index: 1;
+    padding-top: 80px;
+    padding-bottom: 60px;
+}
+
+/* ── Video Player Section ── */
+.playerSection {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ── Episode Section ── */
+.episodeSection {
+    margin-bottom: 32px;
+}
+
+.episodeSectionHeader {
     display: flex;
-    gap: 40px;
-    margin-bottom: 40px;
-    margin-top: 24px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.episodeSectionTitle {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.seasonSelect {
+    background: var(--surface-color);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+}
+
+/* ── Episode Grid (landscape cards) ── */
+.episodeGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+}
+
+.episodeCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface-color);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    color: var(--text-primary);
+}
+
+.episodeCard:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.episodeCard.active {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.12);
+}
+
+.episodeCardPlay {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.episodeCard.active .episodeCardPlay {
+    background: var(--primary-color);
+}
+
+.episodeCardInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.episodeNum {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.episodeTitle {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Detail Header: Poster + Info ── */
+.detailHeader {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 48px;
+    align-items: flex-start;
 }
 
 .detailPoster {
-    width: 250px;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-lg);
-    flex-shrink: 0;
-    border: 1px solid var(--border-subtle);
+    width: 200px;
+    min-width: 200px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    object-fit: cover;
+    aspect-ratio: 2/3;
 }
 
 .detailInfo {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    padding-top: 8px;
 }
 
 .detailTitle {
     font-family: var(--font-heading);
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 800;
-    margin-bottom: 12px;
-    line-height: 1.1;
     color: var(--text-primary);
+    margin: 0 0 16px 0;
+    line-height: 1.2;
 }
 
+/* ── Metadata Grid ── */
 .detailMeta {
     display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    align-items: center;
     flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
-.detailRating {
+.metaItem {
     display: flex;
     align-items: center;
-    gap: 5px;
-    color: #fbbf24;
-    font-weight: 700;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 0.88rem;
+    color: var(--text-primary);
 }
 
-.detailGenre {
-    background: rgba(255, 255, 255, 0.1);
-    color: #FFFFFF;
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+.metaItem svg {
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+/* ── Genre Pills ── */
+.detailGenres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.detailGenrePill {
+    font-size: 0.82rem;
     font-weight: 500;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 5px 14px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
 }
 
+.detailGenrePill:hover {
+    background: var(--primary-color);
+    color: #000;
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+/* ── Description ── */
 .detailDesc {
+    font-size: 0.95rem;
     line-height: 1.7;
     color: var(--text-secondary);
-    margin-bottom: 30px;
-    font-size: 0.95rem;
+    margin: 0;
+    max-width: 680px;
 }
 
-/* ============ Watch Container ============ */
-.watch-container {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 32px;
-    align-items: flex-start;
-}
-
-.video-section {
-    flex: 1;
-    min-width: 0;
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-xl);
-    background: black;
-}
-
-/* ============ Episode Sidebar ============ */
-.episode-sidebar {
-    width: 320px;
-    background-color: rgba(255, 255, 255, 0.03);
-    /* Glass/Transparent */
-    border-radius: var(--border-radius-lg);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    max-height: 600px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.episode-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.episode-header select {
-    padding: 6px 10px;
-    border-radius: var(--border-radius);
-    background-color: #000000;
-    color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    cursor: pointer;
-}
-
-.episodeList.sidebar-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    overflow-y: auto;
-    padding-right: 4px;
-}
-
-.episodeBtn.sidebar-btn {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 10px 12px;
-    border-radius: var(--border-radius);
-    width: 100%;
-    color: var(--text-secondary);
-    transition: all var(--transition-speed);
-    cursor: pointer;
-}
-
-.episodeBtn.sidebar-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-}
-
-.episodeBtn.sidebar-btn.active {
-    background: var(--primary-color);
-    color: #000000;
-    /* Fixed: Black text on White bg */
-    border-color: transparent;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-}
-
-.ep-num {
-    background-color: rgba(0, 0, 0, 0.3);
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    font-weight: 600;
-}
-
-.episodeBtn.sidebar-btn.active .ep-num {
-    color: white;
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-/* ============ Recommendations ============ */
+/* ── Recommendations ── */
 .recommendationsSection {
-    margin-top: 50px;
-    padding-top: 32px;
-    border-top: 1px solid var(--border-subtle);
-}
-
-.recommendationsSection .sectionTitle {
-    font-family: var(--font-heading);
-    font-size: 1.6rem;
-    margin-bottom: 24px;
-    font-weight: 700;
-    color: var(--text-primary);
+    margin-top: 48px;
 }
 
 .recommendationsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
 }
 
-/* ============ Responsive ============ */
-@media (max-width: 1024px) {
-    .watch-container {
-        flex-direction: column;
-    }
-
-    .episode-sidebar,
-    .video-section {
-        width: 100%;
-    }
-}
-
+/* ── Responsive ── */
 @media (max-width: 768px) {
+    .detailBackdrop {
+        height: 300px;
+    }
+
+    .detailContainer {
+        padding-top: 60px;
+    }
+
     .detailHeader {
         flex-direction: column;
-        align-items: center;
-        text-align: center;
-        margin-top: 0;
+        gap: 20px;
     }
 
     .detailPoster {
-        width: 180px;
+        width: 140px;
+        min-width: 140px;
     }
 
-    .detailMeta {
-        justify-content: center;
+    .detailTitle {
+        font-size: 1.5rem;
+    }
+
+    .episodeGrid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     }
 
     .recommendationsGrid {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 14px;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
 }
