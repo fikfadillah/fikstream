@@ -22,7 +22,7 @@ const ALLOWED_ACTIONS = [
     'detail',
 ];
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
     // Hanya izinkan GET request
     if (event.httpMethod !== 'GET') {
         return {
@@ -36,6 +36,7 @@ exports.handler = async (event) => {
 
     // Validasi: action wajib ada dan harus dari daftar yang diizinkan
     if (!action || !ALLOWED_ACTIONS.includes(action)) {
+        console.error(`Invalid action: ${action}`);
         return {
             statusCode: 400,
             body: JSON.stringify({ error: 'Invalid or missing action parameter' }),
@@ -45,9 +46,10 @@ exports.handler = async (event) => {
     const apiBaseUrl = process.env.API_BASE_URL;
 
     if (!apiBaseUrl) {
+        console.error('CRITICAL: API_BASE_URL environment variable is not set!');
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Server configuration error' }),
+            body: JSON.stringify({ error: 'Server configuration error: API_BASE_URL missing' }),
         };
     }
 
@@ -58,6 +60,8 @@ exports.handler = async (event) => {
             targetUrl.searchParams.append(key, value);
         });
 
+        // console.log(`Proxying request to: ${targetUrl.toString()}`); // Uncomment for debugging URL
+
         const response = await fetch(targetUrl.toString(), {
             headers: {
                 'User-Agent': 'FikStream/1.0',
@@ -66,6 +70,7 @@ exports.handler = async (event) => {
         });
 
         if (!response.ok) {
+            console.error(`Upstream API failed with status: ${response.status}`);
             return {
                 statusCode: response.status,
                 body: JSON.stringify({ error: `Upstream API error: ${response.status}` }),
@@ -83,9 +88,10 @@ exports.handler = async (event) => {
             body: JSON.stringify(data),
         };
     } catch (error) {
+        console.error('Proxy internal error:', error);
         return {
             statusCode: 502,
-            body: JSON.stringify({ error: 'Failed to reach upstream API' }),
+            body: JSON.stringify({ error: 'Failed to reach upstream API', details: error.message }),
         };
     }
 };
